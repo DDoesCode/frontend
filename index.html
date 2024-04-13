@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: left;
+      background-color: #000000;
+    }
+    .container {
+      width: 400px;
+      margin: 0 auto;
+      background: #F5F5F5;
+      border: 1px solid #000000;
+      border-radius: 10px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .input-group {
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: top;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+    .input-group input {
+      width: 70px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 79px;
+      height: 79px;;
+      border-radius: 50%;
+      margin-top: 20 px auto 0;
+      background-color: #915cf8;
+      background-image: url('logo.png');
+       background-size: cover;
+        background-repeat: no-repeat;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #66117e;
+    }
+    .age-section {
+      margin-top: 20px;
+      font-family: 'Simonetta';
+      font-style: normal;
+      font-weight: 900;
+      font-size: 30px;
+      line-height: 38px;
+      color: #915CF8;
+    }
+    .section-label {
+      font-family: 'Simonetta';
+      font-style: normal;
+      font-weight: 900;
+      font-size: 12px;
+      line-height: 15px;
+      color: rgba(0, 0, 0, 0.64);
+    }
+    .line {
+      width: 60%;
+      align-items: left;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      margin: 20px 0;
+    }
+    .button-line-container {
+      display: flex;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="input-group">
+      <label for="day" class="section-label">Day:</label>
+      <input type="number" id="day" min="1" max="31">
+    </div>
+    <div class="input-group">
+      <label for="month" class="section-label">Month:</label>
+      <input type="number" id="month" min="1" max="12">
+    </div>
+    <div class="input-group">
+      <label for="year" class="section-label">Year:</label>
+      <input type="number" id="year">
+    </div>
+    <div class="button-line-container"> <div class="line"></div>
+      <button onclick="calculateAge()"></button>
+    </div>
+    <div id="ageOutput">
+      <div class="age-section"> __  Years</div>
+      <div class="age-section"> __  Months</div>
+      <div class="age-section">  __ Days</div>
+    </div>
+
+    
+    
+  </div>
+
+  <script>
+    function calculateAge() {
+      var dobDay = parseInt(document.getElementById('day').value);
+      var dobMonth = parseInt(document.getElementById('month').value);
+      var dobYear = parseInt(document.getElementById('year').value);
+
+      var today = new Date();
+      var dob = new Date(dobYear, dobMonth - 1, dobDay);
+
+      var years = today.getFullYear() - dob.getFullYear();
+      var months = today.getMonth() - dob.getMonth();
+      var days = today.getDate() - dob.getDate();
+
+      if (months < 0 || (months === 0 && today.getDate() < dob.getDate())) {
+        years--;
+        months += 12;
+      }
+
+      if (days < 0) {
+        months--;
+        days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+      }
+
+      document.getElementById('ageOutput').innerHTML = `
+        <div class="age-section">${years} years</div>
+        <div class="age-section">${months} months</div>
+        <div class="age-section">${days} days</div>
+      `;
+    }
+  </script>
+</body>
+</html>
